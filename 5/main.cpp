@@ -48,7 +48,7 @@ public:
 int main() {
 
     Solution* solu = new Solution();
-    string str = "123454321";
+    string str = "1221";
     cout << solu->longestPalindrome(str);
 
     return 0;
