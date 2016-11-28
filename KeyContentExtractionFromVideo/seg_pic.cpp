@@ -35,7 +35,7 @@ void SegPic::apply() {
             continue;  
         //cout<<filename->d_name <<endl;
         if (child_dir->d_type & DT_DIR) {
-        	string tmp, tmp2, tmp3;
+        	string tmp, tmp2, tmp3, tmp4;
         	string s1(seg_pic_dir);
         	string s2(child_dir->d_name);
 
@@ -53,6 +53,10 @@ void SegPic::apply() {
         	seg_output_file_name = tmp3.c_str();
         	//cout << tmp3 << endl;
         	
+        	//分割点的输出文件
+        	tmp4 = tmp2 + s2 + "_seg_points" + ".txt";
+        	seg_point_file_name = tmp4.c_str();
+
         	cout << "seg pic: " << tmp << endl;
         	segment_pic();
         }  
@@ -100,6 +104,7 @@ void SegPic::segment_pic() {
 	}
 
 	ofstream out(seg_output_file_name, ios::app);
+	ofstream out2(seg_point_file_name, ios::app);
 	for (int i = 0; i < (int)(files.size() - 1); i++) {
 		string s1(seg_input_dir);
 		string file1;
@@ -115,14 +120,22 @@ void SegPic::segment_pic() {
 		double tmp = calculate_distance(tmp1, tmp2);
 		//cout << i + 1 << "  " << i + 2 << "  " << tmp << endl;
 		out << tmp << " ";
-		if (tmp > 1200)
+
+		if (tmp > 1200) {
 			//cout << "up" << endl;
 			out << "seg";
+			out2 << i + 1 << "\n";
+
+		}
+
 		out << "\n";
 
 		files_distance.push_back(tmp);
 	}
+	out2 << files.size() - 1;
+	
 	out.close();
+	out2.close();
 	/*
 	double pre_distance_mean = 0;
 	vector<double> vec_pre_distance;

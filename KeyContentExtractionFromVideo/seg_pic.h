@@ -19,6 +19,9 @@ class SegPic {
 public:
 	void init_para();
 	void apply();
+	vector<vector<int>> get_seg_sets() {
+		return seg_sets;
+	}
 
 protected:
 	double calculate_distance(Mat& mat1, Mat& mat2);
@@ -31,7 +34,8 @@ private:
 	const char* seg_input_dir;
 	const char* seg_input_file_name;
 	const char* seg_output_file_name;
-
+	const char* seg_point_file_name;
+	vector<vector<int>> seg_sets;
 };
 #define KEYCONTENTEXTRACTIONFROMVIDEO_SEG_PIC_H
 
